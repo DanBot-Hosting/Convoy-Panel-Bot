@@ -1,4 +1,9 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
+const Chalk = require("chalk");
+const fs = require('fs');
+const path = require('path');
+
+const Config = require('../../config.json');
 
 /**
  * 
@@ -6,5 +11,45 @@ const Discord = require('discord.js');
  * @param {Discord.Message} Message 
  */
 module.exports = async (Client, Message) => {
-    //console.log(`Message from ${Message.author.tag} in ${Message.guild.name}: ${Message.content} |`);
-}
+    if (Message.author.bot) return; // Stop bots from running commands.
+    if (Message.channel.type === Discord.ChannelType.DM) return; // Stop commands in DMs.
+
+    const prefix = Config.Prefix;
+
+
+    if (!Message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
+
+    const args = Message.content.slice(prefix.length).trim().split(/ +/g);
+    const commandargs = Message.content.split(" ").slice(1).join(" ");
+    const command = args.shift().toLowerCase();
+
+    console.log(
+        Chalk.magenta("[DISCORD] ") +
+            Chalk.yellow(
+                `[${Message.author.username}] [${Message.author.id}] >> ${prefix}${command} ${commandargs}`,
+            ),
+    );
+
+    try {
+
+        const categoriesPath = path.join(__dirname, '../commands');
+        const categories = fs.readdirSync(categoriesPath).filter(x => fs.statSync(path.join(categoriesPath, x)).isDirectory());
+
+        if (categories.includes(command)) {
+            if (!args[0]) {
+                let commandFile = require(`../commands/${command}/help.js`);
+                await commandFile.run(Client, Message, args);
+            } else {
+                let commandFile = require(`../commands/${command}/${args[0]}.js`);
+                await commandFile.run(Client, Message, args);
+            }
+        } else {
+            let commandFile = require(`../commands/${command}.js`);
+            await commandFile.run(Client, Message, args);
+        }
+    } catch (Error) {
+        if (!Error.message.startsWith("Cannot find module")) {
+            console.log("Error loading module:", Error);
+        }
+    }
+};
