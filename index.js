@@ -25,22 +25,6 @@ const Client = new Discord.Client({
     }
 });
 
-// ;(async() => {
-//     await Axios.get('https://manage.danbot.cloud/api/application/users', {
-//         headers: {
-//             Authorization: "Bearer " + Config.ConvoyToken,
-//             Accept: "application/json",
-//             "Content-Type": "application/json"
-//         }
-//     }).then(async (Response) => {
-//         const JSON = Response.data;
-
-//         const Usernames = JSON.data.map(User => User.name);
-
-//         console.log(Usernames);
-//     });
-// })();
-
 module.exports = Client;
 require('./src/handler/index.js');
 
