@@ -14,19 +14,19 @@ module.exports = async (Client, Message) => {
     if (Message.author.bot) return; // Stop bots from running commands.
     if (Message.channel.type === Discord.ChannelType.DM) return; // Stop commands in DMs.
 
-    const prefix = Config.Prefix;
+    const Prefix = Config.DiscordBot.Prefix;
 
 
-    if (!Message.content.toLowerCase().startsWith(prefix.toLowerCase())) return;
+    if (!Message.content.toLowerCase().startsWith(Prefix.toLowerCase())) return;
 
-    const args = Message.content.slice(prefix.length).trim().split(/ +/g);
+    const args = Message.content.slice(Prefix.length).trim().split(/ +/g);
     const commandargs = Message.content.split(" ").slice(1).join(" ");
     const command = args.shift().toLowerCase();
 
     console.log(
         Chalk.magenta("[DISCORD] ") +
             Chalk.yellow(
-                `[${Message.author.username}] [${Message.author.id}] >> ${prefix}${command} ${commandargs}`,
+                `[${Message.author.username}] [${Message.author.id}] >> ${Prefix}${command} ${commandargs}`,
             ),
     );
 

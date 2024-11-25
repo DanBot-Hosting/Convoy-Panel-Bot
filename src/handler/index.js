@@ -2,6 +2,9 @@ const Fs = require('fs');
 const Path = require('path'); 
 const Discord = require('discord.js');
 
+/**
+ * {Discord.Client} Client
+ */
 const Client = require('../../index.js');
 
 const BotEvents = Fs.readdirSync('./src/events/').filter(file => file.endsWith('.js'));

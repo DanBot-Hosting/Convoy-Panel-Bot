@@ -7,9 +7,5 @@ module.exports = async () => {
         filePath: './database.sqlite'
     });
 
-    const users = DB.table('users');
-
-    const usersData = await users.all();
-
-    console.log(usersData);
+    return DB;
 }

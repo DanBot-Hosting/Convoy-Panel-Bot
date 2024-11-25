@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 
-exports.description = "Linking your account to the panel.";
+const Config = require('../../../config.json');
+
+exports.description = "Whitelist a user to use the bot.";
 
 /**
  * 
@@ -10,5 +12,8 @@ exports.description = "Linking your account to the panel.";
  * @returns void
  */
 exports.run = async (client, message, args) => {
+
+    if(!message.member.roles.cache.has(Config.DiscordBot.Permissions.BotAdmin)) return message.reply({ content: "You do not have permission to use this command." });
+
     await message.channel.send('This command is currently disabled.');    
 };
