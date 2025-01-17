@@ -8,7 +8,6 @@ const Client = new Discord.Client({
     partials: [
         Discord.Partials.Channel,
         Discord.Partials.GuildMember,
-        Discord.Partials.GuildScheduledEvent,
         Discord.Partials.Message,
         Discord.Partials.Reaction,
         Discord.Partials.ThreadMember,
