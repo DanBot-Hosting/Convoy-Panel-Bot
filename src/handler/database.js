@@ -1,11 +1,17 @@
-const { QuickDB } = require('quick.db');
+const { QuickDB, MySQLDriver } = require('quick.db');
+const Config = require('../../config.json');
 
 module.exports = async () => {
-    console.log("Database handler is ready!");
-
-    const DB = new QuickDB({
-        filePath: './database.sqlite'
+    const MySQL = new MySQLDriver({
+        host: Config.MySQL.Host,
+        user: Config.MySQL.Username,
+        password: Config.MySQL.Password,
+        database: Config.MySQL.Database
     });
+
+    await MySQL.connect();
+
+    const DB = await new QuickDB({ driver: MySQL });
 
     return DB;
 }

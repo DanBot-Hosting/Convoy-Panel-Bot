@@ -4,7 +4,9 @@
   "description": "Bot to Manage users, servers, on a Convoy Panel.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "slashd": "node ./scripts/delete-slashcommands.js",
+    "slashc": "node ./scripts/create-slashcommands.js"
   },
   "keywords": [
     "ConvoyPanel",
@@ -18,6 +20,8 @@
     "better-sqlite3": "^11.5.0",
     "chalk": "^4.1.2",
     "discord.js": "^14.17.3",
+    "mysql2": "^3.12.0",
+    "nodemailer": "^6.9.16",
     "quick.db": "^9.1.7"
   }
 }

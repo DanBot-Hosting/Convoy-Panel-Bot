@@ -9,9 +9,5 @@ const Config =  require('../../config.json');
  * @param {Discord.ChatInputCommandInteraction} Interaction 
  */
 module.exports.run = async function(Client, Interaction){
-    console.log("[SLASH COMMAND TRIGGERED]:");
-
-    console.log(Interaction);
-
-    await Interaction.reply({ content: "Hello, World!", flags: Discord.MessageFlags.Ephemeral });
+    return require(`../slashCommands/${Interaction.commandName}/${Interaction.options.getSubcommand()}.js`).run(Client, Interaction);
 };

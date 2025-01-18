@@ -1,0 +1,9 @@
+{
+    "DiscordToken": "",
+    "ConvoyToken": "",
+    "ConvoyPanelURL": "",
+    "MainGuildId": "",
+    "DiscordBot": {
+        "Prefix": ""
+    }
+}

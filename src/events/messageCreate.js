@@ -16,7 +16,6 @@ module.exports = async (Client, Message) => {
 
     const Prefix = Config.DiscordBot.Prefix;
 
-
     if (!Message.content.toLowerCase().startsWith(Prefix.toLowerCase())) return;
 
     const args = Message.content.slice(Prefix.length).trim().split(/ +/g);
