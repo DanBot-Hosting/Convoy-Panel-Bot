@@ -11,6 +11,9 @@ const Config = require('../../config.json');
  * @param {Discord.Message} Message 
  */
 module.exports = async (Client, Message) => {
+
+    return; // Message commands are sooooo 2024 type shi.
+
     if (Message.author.bot) return; // Stop bots from running commands.
     if (Message.channel.type === Discord.ChannelType.DM) return; // Stop commands in DMs.
 
