@@ -1,6 +1,6 @@
 module.exports.description = "Reset the password.";
 
-const { SlashCommandSubcommandBuilder, Client, ChatInputCommandInteraction, EmbedBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandSubcommandBuilder, Client, ChatInputCommandInteraction, MessageFlags } = require('discord.js');
 const { QuickDB } = require('quick.db');
 
 /** @type {QuickDB} */
@@ -40,7 +40,8 @@ module.exports.run = async function(Client, Interaction){
 
     if(UserAcc == null){
         await Interaction.reply({
-            content: "You do not have an account linked to your Discord account. You must create an account."
+            content: "You do not have an account linked to your Discord account. You must create an account.",
+            flags: MessageFlags.Ephemeral
         })
     } else {
         const newPassword = generatePassword();
