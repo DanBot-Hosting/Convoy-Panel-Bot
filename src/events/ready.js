@@ -9,5 +9,6 @@ const getAllUsers = require('../utilities/getAllUsers.js');
 module.exports = async (Client) => {
     console.log(`Logged in as ${Client.user.tag}!`);
 
-    const DB = await require('../handler/database.js')();
+    // Just starts the DB.
+    await require('../handler/database.js')();
 };
