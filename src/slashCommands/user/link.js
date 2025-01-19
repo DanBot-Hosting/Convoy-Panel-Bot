@@ -1,4 +1,4 @@
-module.exports.description = "Allows users to link to a existing VPS account.";
+module.exports.description = "Allows users to link to an existing VPS account.";
 
 const { Client, ChatInputCommandInteraction, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, ButtonBuilder, ButtonStyle, MessageFlags, User } = require('discord.js');
 const { QuickDB } = require('quick.db');
@@ -9,7 +9,6 @@ const getSpecificUser = require('../../utilities/getSpecificUser.js');
 
 /** @type {QuickDB} */
 const DB = require('../../handler/database.js');
-
 
 /** 
  * Building of the subcommand for the slash command. 
@@ -29,6 +28,9 @@ module.exports.run = async function(Client, Interaction){
 
     const Database = await DB();
     const Whitelisted = Database.table("Whitelisted");
+    const UserAccounts = Database.table("UserAccounts");
+
+    if(UserAccounts.get(Interaction.user.id)) return await Interaction.reply({ content: "You already have an account linked to your Discord account. Please use the `/user info` to see your information.", flags: MessageFlags.Ephemeral });
 
     const UserWhitelist = await Whitelisted.get(Interaction.user.id);
 
@@ -56,7 +58,8 @@ module.exports.run = async function(Client, Interaction){
 
             const email = modalInteraction.fields.getTextInputValue('emailInput');
     
-            let Code = generateCode();
+            const Code = generateCode();
+            console.log("Verification Code: " + Code);
             await sendEmail(email, "Email Verification", `Your verification code is: ${Code}`);
     
             // Button for sending the Verification Code.
@@ -77,6 +80,13 @@ module.exports.run = async function(Client, Interaction){
             const collector = modalInteraction.channel.createMessageComponentCollector({ filter: buttonFilter, time: 5 * 60_000 });
     
             collector.on('collect', async (buttonInteraction) => {
+                resendButton.setDisabled(true);
+
+                await modalInteraction.editReply({
+                    components: [new ActionRowBuilder().addComponents(resendButton)],
+                    flags: MessageFlags.Ephemeral
+                });
+
                 const verificationModal = new ModalBuilder()
                     .setCustomId('verificationModal')
                     .setTitle('Enter Verification Code:');
@@ -91,11 +101,11 @@ module.exports.run = async function(Client, Interaction){
     
                 await buttonInteraction.showModal(verificationModal);
     
-                const verificationFilter = (i) =>
-                    i.customId === 'verificationModal' && i.user.id === Interaction.user.id;
+                const verificationFilter = (i) => i.customId === 'verificationModal' && i.user.id === Interaction.user.id;
     
                 await buttonInteraction.awaitModalSubmit({ filter: verificationFilter, time: 5 * 60_000 })
                     .then(async (verificationInteraction) => {
+    
                         const userCode = verificationInteraction.fields.getTextInputValue('codeInput');
     
                         if (userCode === Code) {
@@ -115,7 +125,7 @@ module.exports.run = async function(Client, Interaction){
                     })
                     .catch(async () => {
                         await buttonInteraction.followUp({
-                            content: "Verification process timed out. Please try again.",
+                            content: "You ran out of time to type out the code. Please use the command again to link your account.",
                             flags: MessageFlags.Ephemeral,
                         });
                     });
@@ -125,7 +135,7 @@ module.exports.run = async function(Client, Interaction){
                 resendButton.setDisabled(true);
     
                 await modalInteraction.editReply({
-                    content: "The button is now disabled. Please run the command again if you need to resend the code.",
+                    content: "The button is now disabled. Please run the command again if you need to redo this process.",
                     components: [new ActionRowBuilder().addComponents(resendButton)],
                     flags: MessageFlags.Ephemeral
                 });
@@ -160,5 +170,4 @@ module.exports.run = async function(Client, Interaction){
             await UserAccounts.set(`${Interaction.user.id}.id`, UserObject.id);
         }
     }
-    
 }

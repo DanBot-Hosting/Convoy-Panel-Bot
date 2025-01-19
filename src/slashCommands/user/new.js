@@ -29,7 +29,6 @@ module.exports.run = async function(Client, Interaction){
 
     const Database = await DB();
     const Whitelisted = Database.table("Whitelisted");
-    const UserAccounts = Database.table("UserAccounts");
 
     const UserWhitelist = await Whitelisted.get(Interaction.user.id);
 
@@ -167,7 +166,7 @@ module.exports.run = async function(Client, Interaction){
         });
     
     /**
-     * 
+     * @description This function is used to set the account data for the user.
      * @param {String} Name
      * @param {String} Email
      */
