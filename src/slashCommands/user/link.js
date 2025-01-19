@@ -30,7 +30,7 @@ module.exports.run = async function(Client, Interaction){
     const Whitelisted = Database.table("Whitelisted");
     const UserAccounts = Database.table("UserAccounts");
 
-    if(UserAccounts.get(Interaction.user.id)) return await Interaction.reply({ content: "You already have an account linked to your Discord account. Please use the `/user info` to see your information.", flags: MessageFlags.Ephemeral });
+    if(await UserAccounts.get(Interaction.user.id)) return await Interaction.reply({ content: "You already have an account linked to your Discord account. Please use the `/user info` to see your information.", flags: MessageFlags.Ephemeral });
 
     const UserWhitelist = await Whitelisted.get(Interaction.user.id);
 
