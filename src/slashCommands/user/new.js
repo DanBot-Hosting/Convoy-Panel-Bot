@@ -184,8 +184,8 @@ module.exports.run = async function(Client, Interaction){
         await UserAccounts.set(`${Interaction.user.id}.name`, JSON.data.name);
         await UserAccounts.set(`${Interaction.user.id}.id`, JSON.data.id);
 
-        await Interaction.user.send({ content: `Your account has been created. Here are your account details:\n\n**Email:** ${JSON.data.email}\n**Password:** ${Password}\n\nPlease keep this information safe.`, ephemeral: true });
+        await Interaction.user.send({ content: `Your account has been created. Link: https://manage.danbot.cloud\n\nHere are your account details:\n\n**Email:** ${JSON.data.email}\n**Password:** ${Password}\n\nPlease keep this information safe.`, ephemeral: true });
 
-        await sendEmail(JSON.data.email, "Account Information", `Your account has been created. Here are your account details:\n\n**Email:** ${JSON.data.email}\n**Password:** ${Password}\n\nPlease keep this information safe.`);
+        await sendEmail(JSON.data.email, "Account Information", `Your account has been created. Link: https://manage.danbot.cloud\n\nHere are your account details:\n\n**Email:** ${JSON.data.email}\n**Password:** ${Password}\n\nPlease keep this information safe.`);
     }
 }
