@@ -60,7 +60,7 @@ module.exports.run = async function(Client, Interaction){
                 { name: "Account Email", value:  "```" + UserAcc.email.toString() + "```" },
                 { name: "Account ID", value:  "```" + UserAcc.id.toString() + "```" },
                 { name: "Whitelist Status:", value: "```" + (UserWhitelistCheck ? "Whitelisted" : "Not Whitelisted") + "```" },
-                { name: "Discord ID", value:  "```" + Interaction.user.id.toString() + "```" }
+                { name: "Discord ID", value:  "```" + Interaction.UserAcc.id.toString() + "```" }
             )
             .setColor("Blue")
             .setFooter({ text: "Command Executed by: " + Interaction.user.tag, iconURL: Interaction.user.displayAvatarURL() });
