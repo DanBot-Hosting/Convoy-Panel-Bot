@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-
+const Chalk = require('chalk');
 const { exec } = require("child_process");
 const Util = require('util');
 const execPromise = Util.promisify(exec);
@@ -11,7 +11,10 @@ const Config = require('../../config.json');
  * @param {Discord.Client} Client 
  */
 module.exports = async (Client) => {
-    console.log(`Logged in as ${Client.user.tag}!`);
+
+    console.log(
+        Chalk.magenta("[DISCORD] ") + Chalk.green(Client.user.username + " has logged in!"),
+    );
 
     // Just starts the DB.
     await require('../handler/database.js')();

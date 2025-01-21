@@ -3,7 +3,7 @@ const Path = require('path');
 const Discord = require('discord.js');
 
 /**
- * {Discord.Client} Client
+ * @type {Discord.Client}
  */
 const Client = require('../../index.js');
 
