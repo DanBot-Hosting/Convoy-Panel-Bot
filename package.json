@@ -16,6 +16,8 @@
   "author": "DEV-DIBSTER",
   "license": "Apache-2.0",
   "dependencies": {
+    "@sentry/node": "^8.50.0",
+    "@sentry/profiling-node": "^8.50.0",
     "axios": "^1.7.7",
     "better-sqlite3": "^11.5.0",
     "chalk": "^4.1.2",

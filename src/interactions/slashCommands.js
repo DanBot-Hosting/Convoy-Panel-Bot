@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const fs = require('fs');
+const Chalk = require('chalk');
 
-const Config =  require('../../config.json');
+const { Sentry } = require('../../index.js')
 
 /**
  * 
@@ -9,5 +9,18 @@ const Config =  require('../../config.json');
  * @param {Discord.ChatInputCommandInteraction} Interaction 
  */
 module.exports.run = async function(Client, Interaction){
-    return require(`../slashCommands/${Interaction.commandName}/${Interaction.options.getSubcommand()}.js`).run(Client, Interaction);
+
+    console.log(
+        Chalk.greenBright(`Slash Command: `) +
+        Chalk.blueBright(`${Interaction.commandName}`) +
+        Chalk.magentaBright(` ${Interaction.options.getSubcommand()}`) +
+        Chalk.yellowBright(` - ${Interaction.user.username}`) +
+        Chalk.cyanBright(` | ${Interaction.user.id}`)
+    );
+    
+    try {
+        await require(`../slashCommands/${Interaction.commandName}/${Interaction.options.getSubcommand()}.js`).run(Client, Interaction);
+    } catch (Error) {
+        Sentry.captureException(Error);
+    }
 };
