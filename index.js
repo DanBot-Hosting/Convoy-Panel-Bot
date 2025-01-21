@@ -17,7 +17,7 @@ const Client = new Discord.Client({
     presence: {
         activities: [
             {
-                name: "🌐 panel.danbot.host",
+                name: "🌐 manage.danbot.cloud",
                 type: Discord.ActivityType.Custom
             }
         ],
