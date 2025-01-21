@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const Sentry = require("@sentry/node");
+const { nodeProfilingIntegration } = require("@sentry/profiling-node");
 
 const Config = require('./config.json');
 
@@ -22,6 +24,18 @@ const Client = new Discord.Client({
         status: "online"
     }
 });
+
+Sentry.init({
+    dsn: Config.Sentry.DSN,
+    integrations: [
+      nodeProfilingIntegration(),
+    ],
+    tracesSampleRate: 1.0
+});
+
+module.exports.Sentry = Sentry;
+
+process.on("unhandledRejection", (Error) => Sentry.captureException(Error));
 
 module.exports = Client;
 require('./src/handler/index.js');
