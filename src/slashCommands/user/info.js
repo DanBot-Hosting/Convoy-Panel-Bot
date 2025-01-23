@@ -36,7 +36,8 @@ module.exports.run = async function(Client, Interaction){
 
     if(UserAcc == null){
         await Interaction.reply({
-            content: "You do not have an account linked to your Discord account. You must create an account."
+            content: "You do not have an account linked to your Discord account. You must create an account.",
+            flags: MessageFlags.Ephemeral
         })
     } else {
 

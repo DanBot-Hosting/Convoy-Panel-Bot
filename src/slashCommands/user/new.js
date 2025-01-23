@@ -84,6 +84,12 @@ module.exports.run = async function(Client, Interaction){
             const collector = modalInteraction.channel.createMessageComponentCollector({ filter: buttonFilter, time: 5 * 60_000 });
     
             collector.on('collect', async (buttonInteraction) => {
+                resendButton.setDisabled(true);
+
+                await modalInteraction.editReply({
+                    components: [new ActionRowBuilder().addComponents(resendButton)],
+                    flags: MessageFlags.Ephemeral
+                });
 
                 const verificationModal = new ModalBuilder()
                     .setCustomId('verificationModal')
@@ -143,17 +149,11 @@ module.exports.run = async function(Client, Interaction){
             collector.on('end', async (collected) => {
                 resendButton.setDisabled(true);
             
-                if (collected.size > 0) {
-                    await modalInteraction.editReply({
-                        components: [new ActionRowBuilder().addComponents(resendButton)],
-                    });
-                } else {
-                    await modalInteraction.editReply({
-                        content: "The button is now disabled. Please run the command again if you need to resend the code.",
-                        components: [new ActionRowBuilder().addComponents(resendButton)],
-                        flags: MessageFlags.Ephemeral,
-                    });
-                }
+                await modalInteraction.editReply({
+                    content: "The button is now disabled. Please run the command again if you need to redo this process.",
+                    components: [new ActionRowBuilder().addComponents(resendButton)],
+                    flags: MessageFlags.Ephemeral
+                });
             });
 
         })
