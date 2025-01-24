@@ -6,7 +6,6 @@ const { QuickDB } = require('quick.db');
 /** @type {QuickDB} */
 const DB = require('../../handler/database.js');
 
-const getSpecificUserId = require('../../utilities/getSpecificUserId.js');
 const getUsersServers = require('../../utilities/getUsersServers.js');
 
 /** 
@@ -42,8 +41,7 @@ module.exports.run = async function(Client, Interaction){
             content: "You do not have an account linked to your Discord account. You must create an account."
         })
     } else {
-        const UserID = await getSpecificUserId(UserAcc.id);
-        const ServerResponse = await getUsersServers(UserID);
+        const ServerResponse = await getUsersServers(UserAcc.id);
         const JSON = ServerResponse.data; //This is then the object that's documented from API docs.
 
         if (JSON.data.length == null) {
@@ -53,9 +51,11 @@ module.exports.run = async function(Client, Interaction){
                 flags: MessageFlags.Ephemeral
             });
         } else {
+            const Dot = "<:dot:1164732475675783278>";
+
             const ResponseEmbed = new EmbedBuilder()
             .setTitle("Server List")
-            .setDescription(`${JSON.data}`)
+            .setDescription(`${JSON.data.map((Server) => `${Dot}**Server Name:** ${Server.name}\n${Dot}**Server ID:** ${Server.id}\n${Dot}**Server UUID:** ${Server.uuid}\n${Dot}**Server Node ID:** ${Server.node_id}\n${Dot}**Server Hostname:** ${Server.hostname}\n${Dot}**Server VMID:** ${Server.vmid}\n${Dot}**Server Internal ID:** ${Server.internal_id}\n\n`).join("\n----------------------")}`)
             .setTimestamp()
             .setColor("Blue")
             .setFooter({ text: "Command Executed by: " + Interaction.user.tag, iconURL: Interaction.user.displayAvatarURL() });
@@ -63,7 +63,7 @@ module.exports.run = async function(Client, Interaction){
             await Interaction.reply({
                 embeds: [ResponseEmbed],
                 flags: MessageFlags.Ephemeral
-            });
+            }).catch((Error) => {});
         }
     }
 }
