@@ -2,8 +2,18 @@
     "DiscordToken": "",
     "ConvoyToken": "",
     "ConvoyPanelURL": "",
-    "MainGuildId": "",
     "DiscordBot": {
+        "ClientId": "",
+        "MainGuildId": "",
         "Prefix": ""
+    },
+    "Sentry": {
+        "DSN": ""
+    },
+    "MySQL": {
+        "Host": "",
+        "User": "",
+        "Password": "",
+        "Database": ""
     }
 }
