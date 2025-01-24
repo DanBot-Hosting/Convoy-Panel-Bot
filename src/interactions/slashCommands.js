@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Chalk = require('chalk');
 
-const { Sentry } = require('../../index.js')
+const { Sentry } = require('../../index.js');
 
 /**
  * 

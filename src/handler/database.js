@@ -9,9 +9,9 @@ module.exports = async () => {
         database: Config.MySQL.Database
     });
 
-    await MySQL.connect().catch((Error) => {})
+    await MySQL.connect().catch((Error) => {});
 
-    const DB = await new QuickDB({ driver: MySQL });
+    const DB = new QuickDB({ driver: MySQL });
 
     return DB;
-}
+};

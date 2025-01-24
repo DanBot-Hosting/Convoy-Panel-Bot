@@ -3,6 +3,7 @@ const Sentry = require("@sentry/node");
 const { nodeProfilingIntegration } = require("@sentry/profiling-node");
 
 const Config = require('./config.json');
+const InitializeHandlers = require('./src/handler/index.js');
 
 const Client = new Discord.Client({
     intents: 3276799,
@@ -33,12 +34,10 @@ Sentry.init({
     tracesSampleRate: 1.0
 });
 
-module.exports.Sentry = Sentry;
+module.exports = { Sentry, Client };
 
 process.on("unhandledRejection", (Error) => Sentry.captureException(Error));
 
-module.exports = Client;
-require('./src/handler/index.js');
-
+InitializeHandlers(Client);
 
 Client.login(Config.DiscordToken);
