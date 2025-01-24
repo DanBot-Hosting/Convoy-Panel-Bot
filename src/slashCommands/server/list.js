@@ -44,7 +44,7 @@ module.exports.run = async function(Client, Interaction){
         const ServerResponse = await getUsersServers(UserAcc.id);
         const JSON = ServerResponse.data; //This is then the object that's documented from API docs.
 
-        if (JSON.data.length == null) {
+        if (JSON.data.length == 0) {
             // Do Nothing. - Reply to just make sure that users know and command isn't broken.
             return Interaction.reply({
                 content: "You do not have any VPS servers.",
