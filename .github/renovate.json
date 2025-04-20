@@ -10,15 +10,24 @@
     {
       "groupName": "all minor and patch dependencies",
       "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "assigneesFromCodeOwners": true
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "assigneesFromCodeOwners": true,
+      "matchPackageNames": [
+        "*"
+      ]
     },
     {
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "groupName": null,
-      "assigneesFromCodeOwners": true
+      "assigneesFromCodeOwners": true,
+      "matchPackageNames": [
+        "*"
+      ]
     }
   ]
 }
