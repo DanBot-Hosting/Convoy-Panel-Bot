@@ -20,7 +20,7 @@
     "@sentry/profiling-node": "^9.0.0",
     "axios": "^1.7.7",
     "better-sqlite3": "^11.5.0",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "discord.js": "^14.17.3",
     "mysql2": "^3.12.0",
     "nodemailer": "^6.9.16",
